@@ -70,6 +70,29 @@
             font-weight: 700;
         }
 
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .lang-btn {
+            background: var(--bg-color);
+            color: var(--primary-green);
+            border: 2px solid var(--primary-green);
+            padding: 7px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .lang-btn:hover {
+            background: var(--primary-green);
+            color: var(--white);
+        }
+
         .cart-btn {
             background: var(--primary-green);
             color: var(--white);
@@ -388,31 +411,34 @@
         <div class="navbar">
             <div class="logo-area" onclick="goHome()">
                 <img src="logo.jpeg" alt="Soros Logo" class="brand-logo">
-                <h1>Soros</h1>
+                <h1>সরস</h1>
             </div>
-            <button class="cart-btn" onclick="toggleCart()">
-                <i class="fa-solid fa-cart-shopping"></i> Cart (<span id="cart-count">0</span>)
-            </button>
+            <div class="nav-right">
+                <button class="lang-btn" id="lang-toggle-btn" onclick="toggleLanguage()">English</button>
+                <button class="cart-btn" onclick="toggleCart()">
+                    <i class="fa-solid fa-cart-shopping"></i> <span data-translate="cart">কার্ট</span> (<span id="cart-count">0</span>)
+                </button>
+            </div>
         </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero" id="hero-section">
-        <h2>Krishoker Fresh Ponno</h2>
-        <p>Sorasori khamar theke songrihito khanti dudh, dim, ghee ebong khati khabar.</p>
+        <h2 data-translate="hero-title">কৃষকের ফ্রেশ পণ্য</h2>
+        <p data-translate="hero-desc">সরাসরি খামার থেকে সংগৃহীত ব্রাউন সুগার, খাঁটি দুধ, ডিম ও দেশি মুরগি।</p>
     </section>
 
     <!-- Main Container -->
     <div class="container">
         <!-- Products Home Grid -->
         <div id="home-view">
-            <h2 class="section-title">Amader Ponnosuho</h2>
+            <h2 class="section-title" data-translate="sec-title">আমাদের পণ্যসমূহ</h2>
             <div class="product-grid" id="product-grid"></div>
         </div>
 
         <!-- Product Details View -->
         <div class="details-view" id="details-view">
-            <button class="back-btn" onclick="goHome()"><i class="fa-solid fa-arrow-left"></i> Back to Products</button>
+            <button class="back-btn" onclick="goHome()"><i class="fa-solid fa-arrow-left"></i> <span data-translate="back-btn">ফিরে যান</span></button>
             <div class="details-content">
                 <div class="details-img-container">
                     <img id="main-detail-img" src="" alt="">
@@ -422,7 +448,7 @@
                     <h2 id="detail-title"></h2>
                     <div class="details-price" id="detail-price"></div>
                     <p class="details-desc" id="detail-desc"></p>
-                    <button class="add-to-cart" id="detail-add-btn" style="padding: 12px; font-size: 16px;">Add to Cart</button>
+                    <button class="add-to-cart" id="detail-add-btn" style="padding: 12px; font-size: 16px;" data-translate="add-to-cart">কার্টে যোগ করুন</button>
                 </div>
             </div>
         </div>
@@ -431,98 +457,175 @@
     <!-- Cart Drawer -->
     <div class="cart-modal" id="cartModal">
         <div class="cart-header">
-            <h3>Shopping Cart</h3>
+            <h3 data-translate="cart-title">আপনার শপিং কার্ট</h3>
             <button class="close-cart" onclick="toggleCart()">&times;</button>
         </div>
         <div class="cart-items" id="cart-items">
-            <p>Cart is empty.</p>
+            <p data-translate="empty-cart">আপনার কার্ট খালি রয়েছে।</p>
         </div>
         <div class="cart-footer">
-            <h4>Total: ৳ <span id="cart-total">0</span></h4>
-            <button class="checkout-btn" onclick="openCheckout()">Confirm Order</button>
+            <h4><span data-translate="total">মোট</span>: ৳ <span id="cart-total">0</span></h4>
+            <button class="checkout-btn" onclick="openCheckout()" data-translate="checkout">অর্ডার কনফার্ম করুন</button>
         </div>
     </div>
 
     <!-- Checkout Modal -->
     <div class="checkout-modal" id="checkoutModal">
         <div class="checkout-box">
-            <h3>Shipping & Contact Info</h3>
+            <h3 data-translate="shipping-title">শিপিং ও যোগাযোগের তথ্য</h3>
             <div class="form-group">
-                <label>Name</label>
-                <input type="text" id="customer-name" placeholder="Enter your name">
+                <label data-translate="name-label">আপনার নাম</label>
+                <input type="text" id="customer-name" placeholder="আপনার নাম লিখুন">
             </div>
             <div class="form-group">
-                <label>Phone Number</label>
-                <input type="text" id="customer-phone" placeholder="Enter phone number">
+                <label data-translate="phone-label">মোবাইল নম্বর</label>
+                <input type="text" id="customer-phone" placeholder="আপনার ফোন নম্বর">
             </div>
             <div class="form-group">
-                <label>Address</label>
-                <textarea id="customer-address" placeholder="Enter full address"></textarea>
+                <label data-translate="address-label">ঠিকানা</label>
+                <textarea id="customer-address" placeholder="পূর্ণ ঠিকানা লিখুন"></textarea>
             </div>
-            <button class="checkout-btn" onclick="submitOrder()">Send Order via WhatsApp</button>
-            <button class="checkout-btn" style="background: #d32f2f; margin-top: 5px;" onclick="closeCheckout()">Cancel</button>
+            <button class="checkout-btn" onclick="submitOrder()" data-translate="whatsapp-btn">WhatsApp-এ অর্ডার পাঠান</button>
+            <button class="checkout-btn" style="background: #d32f2f; margin-top: 5px;" onclick="closeCheckout()" data-translate="cancel-btn">বাতিল</button>
         </div>
     </div>
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 Soros - All rights reserved</p>
+        <p data-translate="footer-text">&copy; ২০২৬ সরস - সর্বস্বত্ব সংরক্ষিত | কৃষকের ফ্রেশ পণ্য</p>
     </footer>
 
     <!-- JavaScript -->
     <script>
+        let currentLang = 'bn'; // Default language is Bengali
+
+        const translations = {
+            bn: {
+                cart: "কার্ট",
+                "hero-title": "কৃষকের ফ্রেশ পণ্য",
+                "hero-desc": "সরাসরি খামার থেকে সংগৃহীত ব্রাউন সুগার, খাঁটি দুধ, ডিম ও দেশি মুরগি।",
+                "sec-title": "আমাদের পণ্যসমূহ",
+                "back-btn": "ফিরে যান",
+                "add-to-cart": "কার্টে যোগ করুন",
+                "cart-title": "আপনার শপিং কার্ট",
+                "empty-cart": "আপনার কার্ট খালি রয়েছে।",
+                total: "মোট",
+                checkout: "অর্ডার কনফার্ম করুন",
+                "shipping-title": "শিপিং ও যোগাযোগের তথ্য",
+                "name-label": "আপনার নাম",
+                "phone-label": "মোবাইল নম্বর",
+                "address-label": "ঠিকানা",
+                "whatsapp-btn": "WhatsApp-এ অর্ডার পাঠান",
+                "cancel-btn": "বাতিল",
+                "footer-text": "&copy; ২০২৬ সরস - সর্বস্বত্ব সংরক্ষিত | কৃষকের ফ্রেশ পণ্য"
+            },
+            en: {
+                cart: "Cart",
+                "hero-title": "Farmer's Fresh Products",
+                "hero-desc": "Directly sourced brown sugar, pure milk, eggs, and local chicken from the farm.",
+                "sec-title": "Our Products",
+                "back-btn": "Back to Products",
+                "add-to-cart": "Add to Cart",
+                "cart-title": "Your Shopping Cart",
+                "empty-cart": "Cart is empty.",
+                total: "Total",
+                checkout: "Confirm Order",
+                "shipping-title": "Shipping & Contact Info",
+                "name-label": "Your Name",
+                "phone-label": "Phone Number",
+                "address-label": "Address",
+                "whatsapp-btn": "Send Order via WhatsApp",
+                "cancel-btn": "Cancel",
+                "footer-text": "&copy; 2026 Soros - All rights reserved"
+            }
+        };
+
         const products = [
             { 
                 id: 1, 
-                name: "Brown Sugar (ব্রাউন সুগার)", 
+                name: { bn: "ব্রাউন সুগার", en: "Brown Sugar" }, 
                 price: 150, 
                 img: "01.jpg", 
                 gallery: ["01.jpg", "logo.jpeg"], 
-                desc: "100% khati ebong roshonnirobhor brown sugar, ja khabarer swad bariye tole ebong shasthyer jonno khub-e upokari." 
+                desc: { 
+                    bn: "১০০% খাঁটি এবং পুষ্টিকর ব্রাউন সুগার, যা খাবারের স্বাদ বাড়িয়ে তোলে এবং স্বাস্থ্যের জন্য খুবই উপকারী।", 
+                    en: "100% pure and nutritious brown sugar that enhances food taste and is very healthy." 
+                } 
             },
             { 
                 id: 2, 
-                name: "Khanti Gorur Dudh (গরুর দুধ)", 
+                name: { bn: "খাঁটি গরুর দুধ", en: "Pure Cow Milk" }, 
                 price: 120, 
                 img: "004.jpg", 
                 gallery: ["004.jpg", "logo.jpeg"], 
-                desc: "Khamar theke sora-suri songrihito khanti ebong khalis gorur dudh." 
+                desc: { 
+                    bn: "খামার থেকে সরাসরি সংগৃহীত খাঁটি এবং খালিস গরুর দুধ।", 
+                    en: "Pure and fresh cow milk sourced directly from the farm." 
+                } 
             },
             { 
                 id: 3, 
-                name: "Deshi Murgir Dim (দেশি মুরগির ডিম)", 
+                name: { bn: "দেশি মুরগির ডিম", en: "Deshi Chicken Eggs" }, 
                 price: 70, 
                 img: "02.png", 
                 gallery: ["02.png", "logo.jpeg"], 
-                desc: "Deshi murgir khati pushtikor dim, protidin-er niramish ba amrish aharer jonno perfect." 
+                desc: { 
+                    bn: "দেশি মুরগির খাঁটি পুষ্টিকর ডিম, প্রতিদিনের পুষ্টির চাহিদার জন্য পারফেক্ট।", 
+                    en: "Authentic nutritious local chicken eggs, perfect for daily nutrition." 
+                } 
             },
             { 
                 id: 4, 
-                name: "Deshi Murgi (দেশি মুরগি)", 
+                name: { bn: "দেশি মুরগি", en: "Deshi Chicken" }, 
                 price: 650, 
                 img: "03.jpeg", 
                 gallery: ["03.jpeg", "logo.jpeg"], 
-                desc: "Khate palon kora shasthosommot deshi murgi." 
+                desc: { 
+                    bn: "খামারে প্রাকৃতিকভাবে পালিত স্বাস্থ্যসম্মত দেশি মুরগি।", 
+                    en: "Healthy naturally-raised local chicken from the farm." 
+                } 
             }
         ];
 
         let cart = [];
+        let activeProductId = null;
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'bn' ? 'en' : 'bn';
+            document.getElementById('lang-toggle-btn').innerText = currentLang === 'bn' ? 'English' : 'বাংলা';
+            
+            // Translate static elements
+            document.querySelectorAll('[data-translate]').forEach(el => {
+                const key = el.getAttribute('data-translate');
+                if (translations[currentLang][key]) {
+                    el.innerHTML = translations[currentLang][key];
+                }
+            });
+
+            // Reload products grid or active details page based on current view
+            loadProducts();
+            if (activeProductId !== null) {
+                showProductDetails(activeProductId);
+            }
+            updateCart();
+        }
 
         function loadProducts() {
             const grid = document.getElementById('product-grid');
             grid.innerHTML = products.map(product => `
                 <div class="product-card" onclick="showProductDetails(${product.id})">
-                    <img src="${product.img}" alt="${product.name}" class="product-img">
+                    <img src="${product.img}" alt="${product.name[currentLang]}" class="product-img">
                     <div class="product-info">
-                        <div class="product-title">${product.name}</div>
+                        <div class="product-title">${product.name[currentLang]}</div>
                         <div class="product-price">৳ ${product.price}</div>
-                        <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(${product.id})">Add to Cart</button>
+                        <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(${product.id})">${translations[currentLang]['add-to-cart']}</button>
                     </div>
                 </div>
             `).join('');
         }
 
         function showProductDetails(productId) {
+            activeProductId = productId;
             const product = products.find(p => p.id === productId);
             if (!product) return;
 
@@ -530,9 +633,10 @@
             document.getElementById('hero-section').style.display = 'none';
             document.getElementById('details-view').style.display = 'block';
 
-            document.getElementById('detail-title').innerText = product.name;
+            document.getElementById('detail-title').innerText = product.name[currentLang];
             document.getElementById('detail-price').innerText = `৳ ${product.price}`;
-            document.getElementById('detail-desc').innerText = product.desc;
+            document.getElementById('detail-desc').innerText = product.desc[currentLang];
+            document.getElementById('detail-add-btn').innerText = translations[currentLang]['add-to-cart'];
             
             const mainImg = document.getElementById('main-detail-img');
             mainImg.src = product.img;
@@ -556,6 +660,7 @@
         }
 
         function goHome() {
+            activeProductId = null;
             document.getElementById('details-view').style.display = 'none';
             document.getElementById('home-view').style.display = 'block';
             document.getElementById('hero-section').style.display = 'block';
@@ -587,12 +692,12 @@
             let totalPrice = 0;
 
             if (cart.length === 0) {
-                cartItemsContainer.innerHTML = '<p>Cart is empty.</p>';
+                cartItemsContainer.innerHTML = `<p>${translations[currentLang]['empty-cart']}</p>`;
             } else {
                 cartItemsContainer.innerHTML = cart.map(item => `
                     <div class="cart-item">
                         <div>
-                            <h4>${item.name}</h4>
+                            <h4>${item.name[currentLang]}</h4>
                             <p>৳ ${item.price} x ${item.quantity}</p>
                         </div>
                         <button onclick="removeFromCart(${item.id})" style="background:none; border:none; color:red; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
@@ -616,7 +721,7 @@
 
         function openCheckout() {
             if (cart.length === 0) {
-                alert('Cart is empty!');
+                alert(currentLang === 'bn' ? 'আপনার কার্ট খালি!' : 'Cart is empty!');
                 return;
             }
             document.getElementById('checkoutModal').style.display = 'flex';
@@ -632,19 +737,19 @@
             const address = document.getElementById('customer-address').value;
 
             if (!name || !phone || !address) {
-                alert('Doya kore shob tottho puron korun.');
+                alert(currentLang === 'bn' ? 'দয়া করে সব তথ্য পূরণ করুন।' : 'Please fill in all information.');
                 return;
             }
 
-            let orderDetails = `Notun Order - Soros%0A`;
-            orderDetails += `Nam: ${name}%0APhone: ${phone}%0AThikana: ${address}%0A%0APonner Talika:%0A`;
+            let orderDetails = currentLang === 'bn' ? `নতুন অর্ডার - সরস%0A` : `New Order - Soros%0A`;
+            orderDetails += currentLang === 'bn' ? `নাম: ${name}%0Aফোন: ${phone}%0Aঠিকানা: ${address}%0A%0Aপণ্যের তালিকা:%0A` : `Name: ${name}%0APhone: ${phone}%0AAddress: ${address}%0A%0AProducts:%0A`;
             
             let total = 0;
             cart.forEach(item => {
-                orderDetails += `- ${item.name} (${item.quantity}ti) - ৳ ${item.price * item.quantity}%0A`;
+                orderDetails += `- ${item.name[currentLang]} (${item.quantity}ti) - ৳ ${item.price * item.quantity}%0A`;
                 total += item.price * item.quantity;
             });
-            orderDetails += `%0AMot Mulsho: ৳ ${total}`;
+            orderDetails += currentLang === 'bn' ? `%0 মোট মূল্য: ৳ ${total}` : `%0ATotal: ৳ ${total}`;
 
             const whatsappNumber = "8801336530525"; 
             window.open(`https://wa.me/${whatsappNumber}?text=${orderDetails}`, '_blank');
